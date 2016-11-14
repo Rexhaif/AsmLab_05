@@ -1,19 +1,21 @@
 SECTION .bss
-	bufWord: RESB 80
-	bufRevers: RESB 80
+bufWord: RESB 80
+bufRevers: RESB 80
+
 
 SECTION .text
-	GLOBAL _start
+GLOBAL _start
+
 Print:
-	mov edi, esi
+	mov edx, esi
 	ReversLoop:
-		;mov edx, 0
+
 		pop ax
-		mov [edi], ax
-		inc edi
-		loop ReversLoop
-	
-	
+		mov [edx], al
+		inc edx
+	loop ReversLoop
+
+
 	mov eax, 4
 	mov ebx, 1
 	mov ecx, bufWord
@@ -25,26 +27,23 @@ Print:
 End:
 	mov eax, 1
 	mov ebx, 0
-	
+
 	int 80h
-	
-_start
+
+_start:
 	mov eax, 3
 	mov ebx, 0
 	mov ecx, bufWord
 	mov edx, 80
 	int 80h
 
-	mov ecx, 80
-	mov esi, bufWord
-	mov ecx,0
-    m: 
-		 
-		mov ax, BYTE [esi+ecx]
-		;mov bx, 10
-		cmp ax, 10
-			je Print
-		push ax
-		inc ecx
-		jmp m		
-	
+
+mov esi, bufWord
+mov ecx,0
+m:
+	mov al, [esi+ecx]
+	cmp al, 10
+	je Print
+	push ax
+	inc ecx
+jmp m
